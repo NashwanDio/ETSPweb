@@ -1,0 +1,203 @@
+/* ==========================================================================
+   Table of Contents
+   ==========================================================================
+   1. Global Styles & Resets (body, fonts)
+   2. Main Layout (CSS Grid container)
+   3. Component: Header / Top Bar
+   4. Component: Left Sidebar
+   5. Component: Main Content Area
+      - Page Links / Breadcrumbs
+      - Category Groups & Item Cards
+   ========================================================================== */
+
+
+/* --- 1. Global Styles & Resets --- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #ffffff;
+}
+
+
+/* --- 2. Main Layout --- */
+.grid-container {
+    display: grid;
+    grid-template-columns: 200px 1fr; 
+    grid-template-rows: 60px 1fr;
+    grid-template-areas:
+        "header header"
+        "sidebar main";
+    height: 100vh;
+}
+
+
+/* --- 3. Component: Header / Top Bar --- */
+/* This is the main <header class="top-bar"> container */
+.top-bar {
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    background-color: #ffffff;
+    border-bottom: 2px solid #fff12d;
+}
+
+/* Styles for <div class="logo"> */
+.logo span {
+    font-size: 36px;
+    font-weight: bold;
+    color: #095715;
+    white-space: nowrap;
+}
+
+/* Styles for <div class="search-container"> and its children */
+.search-container {
+    flex-grow: 1;
+    margin: 0 20px;
+    max-width: 700px;
+    position: relative;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #808080;
+}
+
+.search-container button {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0 12px;
+    cursor: pointer;
+    color: #555;
+}
+
+/* Styles for <div class="header-buttons"> and its links */
+.header-buttons a {
+    margin-left: 20px;
+    font-weight: bold;
+    color: #095715;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.header-buttons a:hover {
+    text-decoration: underline;
+}
+
+
+/* --- 4. Component: Left Sidebar --- */
+/* This is the main <aside class="left-sidebar"> container */
+.left-sidebar {
+    grid-area: sidebar;
+    padding: 10px;
+    background-color: #ffffff;
+    border-right: 1px solid #ddd;
+    font-size: 12px;
+}
+
+.left-sidebar h3 {
+    margin-bottom: 5px;
+    margin-top: 0;
+    font-size: 14px;
+}
+
+.left-sidebar hr {
+    border: none;
+    border-top: 1px solid #000000;
+    margin: 0;
+}
+
+.left-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.left-sidebar ul li a {
+    display: block;
+    padding: 6px 0;
+    text-decoration: none;
+    color: #313131;
+}
+
+.left-sidebar ul li a:hover {
+    background-color: #fffeac;
+    text-decoration: underline;
+}
+
+
+/* --- 5. Component: Main Content Area --- */
+/* This is the main <main class="main-content"> container */
+.main-content {
+    grid-area: main;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+/* Styles for <div class="page-links"> */
+.page-links span {
+    font-size: 14px;
+}
+
+.page-links hr {
+    border: none;
+    border-top: 1px solid #000000;
+    margin-top: 3px;
+}
+
+/* Styles for <h1 class="main-category-title"> */
+.main-category-title {
+    color: #2a7e19;
+    font-size: 16px;
+    font-weight: normal;
+    padding-bottom: 5px;
+}
+
+/* Container for all the category groups */
+.category-groups-container {
+    display: grid;
+    gap: 40px;
+}
+
+/* Styles for each <div class="category-group"> */
+.category-group h4 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* Styles for the <div class="item-grid"> that holds product cards */
+.item-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+    gap: 15px;
+}
+
+/* Styles for each individual <div class="item-card"> */
+.item-card {
+    border: none;
+    background-color: transparent;
+    text-align: center;
+    cursor: pointer;
+}
+
+.item-card img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.item-card p {
+    margin: 0;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.2;
+}
