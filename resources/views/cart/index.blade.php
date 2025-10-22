@@ -72,9 +72,21 @@
                     </div>
                     <div style="display: flex; justify-content: flex-end; align-items: center; gap: 20px;">
                         <a href="{{ route('products.index') }}" style="color: #00579a; text-decoration: none;">&larr; Continue Shopping</a>
-                        <button onclick="alert('Checkout function not implemented yet!')" style="padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 600;">
-                            Proceed to Checkout
-                        </button>
+                        
+                        @auth
+                            {{-- User is logged in, can proceed to checkout --}}
+                            <form action="{{ route('cart.checkout') }}" method="POST">
+                                @csrf
+                                <button type="submit" style="padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 600;">
+                                    Proceed to Checkout
+                                </button>
+                            </form>
+                        @else
+                            {{-- User is not logged in, prompt to login --}}
+                            <a href="{{ route('login') }}" style="padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 6px; text-decoration: none; font-size: 16px; font-weight: 600; display: inline-block;">
+                                Login to Checkout
+                            </a>
+                        @endauth
                     </div>
                 </div>
             </div>

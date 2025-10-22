@@ -54,20 +54,25 @@
                 </div>
             </form>
             
-            <!-- Admin Actions (moved from index) -->
-            <div class="actions" style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
-                <span style="font-size: 14px; color: #666; margin-right: 10px;">Admin:</span>
-                <a href="{{ route('products.edit', $product) }}" style="padding: 6px 12px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #333; font-weight: 500;">
-                    Edit
-                </a>
-                <form action="{{ route('products.destroy', $product) }}" method="post" style="display:inline; margin-left: 8px;">
-                    @csrf 
-                    @method('delete')
-                    <button type="submit" style="padding: 6px 12px; background: #fee; color: #c00; border-radius: 4px; border: 1px solid #fcc; cursor: pointer; font-weight: 500;">
-                        Delete
-                    </button>
-                </form>
-            </div>
+            {{-- Only show admin actions to authenticated admin users --}}
+            @auth
+                @if(auth()->user()->isAdmin())
+                    <!-- Admin Actions (moved from index) -->
+                    <div class="actions" style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+                        <span style="font-size: 14px; color: #666; margin-right: 10px;">Admin:</span>
+                        <a href="{{ route('products.edit', $product) }}" style="padding: 6px 12px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #333; font-weight: 500;">
+                            Edit
+                        </a>
+                        <form action="{{ route('products.destroy', $product) }}" method="post" style="display:inline; margin-left: 8px;">
+                            @csrf 
+                            @method('delete')
+                            <button type="submit" style="padding: 6px 12px; background: #fee; color: #c00; border-radius: 4px; border: 1px solid #fcc; cursor: pointer; font-weight: 500;">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                @endif
+            @endauth
 
         </div>
     </div>

@@ -71,15 +71,11 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
         
         if (isset($cart[$productId])) {
-            $quantity = (int)$request->quantity;
-            if ($quantity > 0) {
-                $cart[$productId]['quantity'] = $quantity;
-                session()->put('cart', $cart);
-                return redirect()->back()->with('success', 'Cart updated successfully.');
-            }
+            $cart[$productId]['quantity'] = (int)$request->input('quantity', 1);
+            session()->put('cart', $cart);
         }
-        // If quantity is 0 or less, or item not found, it's an error or should be removed.
-        return redirect()->back()->with('error', 'Invalid quantity.');
+
+        return redirect()->route('cart.index')->with('success', 'Cart updated!');
     }
 
 
@@ -96,5 +92,29 @@ class CartController extends Controller
         }
 
         return redirect()->back()->with('success', 'Product removed from cart.');
+    }
+
+    /**
+     * Handle checkout (requires authentication)
+     */
+    public function checkout(Request $request)
+    {
+        // This route is protected by 'auth' middleware
+        $cart = session()->get('cart', []);
+        
+        if (empty($cart)) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
+        }
+
+        // TODO: Implement your checkout logic here
+        // - Create order
+        // - Process payment
+        // - Clear cart
+        // - Send confirmation email
+        
+        // For now, just clear the cart and show success message
+        session()->forget('cart');
+        
+        return redirect()->route('products.index')->with('success', 'Order placed successfully! (Checkout functionality to be implemented)');
     }
 }

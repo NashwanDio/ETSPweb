@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -6,7 +6,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style> /* small tweak for forms */
+    <style>
         .form-row { margin-bottom: 8px; }
         input[type=text], input[type=number], textarea, select { width: 100%; padding: 6px; }
         .actions { margin-top: 10px; }
@@ -23,9 +23,27 @@
                 </form>
             </div>
             <div class="header-buttons">
-                <a href="{{ route('products.create') }}">Add Product</a>
-                <a href="{{ route('categories.index') }}">Categories</a>
-                <a href="{{ route('cart.index') }}">Cart ({{ session('cart.items', collect())->count() }})</a>
+                {{-- Show admin links only to authenticated admin users --}}
+                @auth
+                    @if(auth()->user()->isAdmin())
+                        <a href="{{ route('products.create') }}">Add Product</a>
+                        <a href="{{ route('categories.index') }}">Categories</a>
+                    @endif
+                @endauth
+                
+                <a href="{{ route('cart.index') }}">Cart</a>
+                
+                {{-- Authentication links --}}
+                @auth
+                    <span style="color: #666; margin: 0 10px;">{{ auth()->user()->name }}</span>
+                    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" style="background: none; border: none; color: #00579a; cursor: pointer; text-decoration: underline;">Logout</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}">Login</a>
+                    <a href="{{ route('register') }}">Register</a>
+                @endauth
             </div>
         </header>
 
