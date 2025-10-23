@@ -10,9 +10,8 @@ Route::get('/dashboard', function () {
     return redirect()->route('products.index');
 })->middleware(['auth'])->name('dashboard');
 
-// Public routes - anyone can view
+// Public routes - products index
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
-Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
 
 // Cart routes - viewing cart is public, but checkout requires auth
 Route::get('cart', [CartController::class, 'index'])->name('cart.index');
@@ -37,5 +36,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Category management
     Route::resource('categories', CategoryController::class)->except(['show']);
 });
+
+// IMPORTANT: This must come AFTER products/create and products/{product}/edit
+// Otherwise Laravel will think 'create' and 'edit' are product IDs
+Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
 
 require __DIR__.'/auth.php';
